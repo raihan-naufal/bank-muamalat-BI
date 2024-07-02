@@ -1,0 +1,29 @@
+CREATE TABLE 
+    bank-mualamat.pt_sejahtera_bersama.master_table as
+SELECT 
+    o.Date as order_date,
+    pc.CategoryName as category_name,
+    p.ProdName as product_name,
+    p.Price as product_price,
+    o.Quantity as order_qty,
+    (o.Quantity * p.Price) as total_sales,
+    c.CustomerEmail as cust_email,
+    c.CustomerCity as cust_city
+
+FROM 
+    bank-mualamat.pt_sejahtera_bersama.orders  as o
+JOIN 
+    bank-mualamat.pt_sejahtera_bersama.customers as c
+ON 
+    o.CustomerID = c.CustomerID
+JOIN 
+    bank-mualamat.pt_sejahtera_bersama.products as p
+ON 
+    o.ProdNumber = p.ProdNumber
+JOIN 
+    bank-mualamat.pt_sejahtera_bersama.productcategory as pc
+ON 
+    p.Category = pc.CategoryID
+
+ORDER BY
+    order_date ASC;
